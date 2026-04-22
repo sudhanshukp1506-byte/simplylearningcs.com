@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simply Learning Coaching Centre</title>
+
+<style>
+:root {
+    --bg: #f4f6fb;
+    --text: #111;
+    --card: #fff;
+    --accent: #4b4bff;
+}
+
+.dark {
+    --bg: #111;
+    --text: #fff;
+    --card: #1c1c1c;
+    --accent: #7c7cff;
+}
+
+body {
+    margin:0;
+    font-family: Arial;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* HEADER */
+header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 40px;
+    background:var(--accent);
+    color:white;
+    position:relative;
+}
+
+.logo { font-weight:bold; }
+
+/* CENTER NAV */
+nav {
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+nav a {
+    margin:0 15px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* RIGHT BUTTONS */
+.right {
+    
+    display:flex;
+    gap:10px;
+    
+}
+
+.btn {
+    background:white;
+    color:var(--accent);
+    padding:8px 15px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* PAGES */
+.page { display:none; padding:60px; text-align:center; }
+.active { display:block; }
+
+/* COURSE CARDS */
+.course-box {
+    background:var(--card);
+    padding:20px;
+    margin:15px auto;
+    max-width:400px;
+    border-radius:12px;
+    box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
+
+/* MODAL */
+.modal {
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-box {
+    background:var(--card);
+    padding:30px;
+    border-radius:20px;
+    width:350px;
+    text-align:center;
+}
+
+.close {
+    float:right;
+    cursor:pointer;
+}
+
+input {
+    width:100%;
+    padding:10px;
+    margin-top:15px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+.otp-btn {
+    margin-top:20px;
+    width:100%;
+    padding:10px;
+    background:gray;
+    color:white;
+    border:none;
+    border-radius:6px;
+}
+
+/* FOOTER */
+footer {
+    position:fixed;
+    bottom:0;
+    width:100%;
+    text-align:center;
+    padding:10px;
+    background:var(--accent);
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Simply Learning</div>
+
+    <!-- CENTERED NAV -->
+    <nav>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('courses')">Courses</a>
+        <a onclick="showPage('contact')">Contact</a>
+    </nav>
+
+    <div class="right">
+        <div class="btn" onclick="openModal()">Login</div>
+        <div class="btn" onclick="toggleTheme()">🌙</div>
+    </div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="page active">
+    <h1>Welcome to Simply Learning</h1>
+    <p>Build your future with the right guidance and support</p>
+
+    <!-- IMAGE GALLERY -->
+    <div class="home-images">
+        <img src="1.png" onclick="openImage(this.src)">
+        <img src="2.png" onclick="openImage(this.src)">
+        <img src="3.png" onclick="openImage(this.src)">
+        <img src="4.png" onclick="openImage(this.src)">
+        <img src="student_name.png" onclick="openImage(this.src)">
+    </div>
+
+    <!-- ADMIN UPLOAD (HIDDEN) -->
+    <div id="adminPanel" style="display:none; margin-top:30px;">
+        <input type="file" id="imgUpload">
+        <button onclick="uploadImage()">Upload Image</button>
+    </div>
+</section>
+
+<!-- IMAGE VIEW MODAL -->
+<div id="imgModal" class="img-modal">
+    <img id="modalImg">
+</div>
+
+<style>
+.home-images {
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    margin-top:30px;
+    flex-wrap:wrap;
+}
+
+.home-images img {
+    width:250px;
+    height:250px;
+    object-fit:cover;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.home-images img:hover {
+    transform:scale(1.1);
+}
+
+/* MODAL */
+.img-modal {
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.95);
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.img-modal img {
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+    cursor:grab;
+    transition:transform 0.1s;
+}
+</style>
+
+<script>
+// OPEN IMAGE
+function openImage(src) {
+    const modal = document.getElementById("imgModal");
+    const img = document.getElementById("modalImg");
+
+    modal.style.display = "flex";
+    img.src = src;
+}
+
+// CLOSE IMAGE
+document.getElementById("imgModal").onclick = function(e){
+    if(e.target.id === "imgModal"){
+        this.style.display = "none";
+    }
+};
+</script>
+<!-- COURSES -->
+<section id="courses" class="page">
+    <h2>Courses</h2>
+
+    <!-- LANGUAGE BOXES -->
+    <div class="lang-container">
+
+        <!-- ENGLISH -->
+        <div class="lang-box">
+            <p>
+                At Simply Learning Coaching Centre, we provide complete academic support for students from Class 7th to 12th. 
+                We focus on building strong concepts in Maths, Science, and English while helping students gain confidence in their studies.
+                <br><br>
+                Our experienced teachers, regular tests, doubt-solving sessions, and structured study materials ensure every student improves step by step.
+                <br><br>
+                Join us and start your learning journey in a supportive and motivating environment where your success is our priority.
+            </p>
+        </div>
+
+        <!-- HINDI -->
+    <div class="lang-box">
+        <p>
+        सिंपली लर्निंग कोचिंग सेंटर में हम कक्षा 7वीं से 12वीं तक के छात्रों के लिए पूर्ण शैक्षणिक सहायता प्रदान करते हैं। 
+        हम गणित, विज्ञान और अंग्रेजी में मजबूत नींव बनाने पर ध्यान देते हैं और साथ ही छात्रों का आत्मविश्वास बढ़ाने में मदद करते हैं।
+        <br><br>
+        हमारे अनुभवी शिक्षक, नियमित टेस्ट, डाउट क्लियरिंग सेशन और व्यवस्थित अध्ययन सामग्री यह सुनिश्चित करते हैं कि हर छात्र धीरे-धीरे प्रगति करे।
+        <br><br>
+        हमारे साथ जुड़ें और एक सहयोगी और प्रेरणादायक वातावरण में अपनी सीखने की यात्रा शुरू करें, जहाँ आपकी सफलता हमारी प्राथमिकता है।
+    </p>
+    </div>
+
+    </div>
+
+
+</section>
+
+<style>
+/* LANGUAGE BOXES */
+.lang-container {
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    margin-top:30px;
+    flex-wrap:wrap;
+}
+
+.lang-box {
+    width:350px;
+    height:220px;
+    background:#ffffff;
+    border-radius:12px;
+    padding:15px;
+    box-shadow:0 5px 12px rgba(0,0,0,0.15);
+    overflow-y:auto;
+    line-height:1.6;
+}
+
+.lang-box::-webkit-scrollbar {
+    width:6px;
+}
+.lang-box::-webkit-scrollbar-thumb {
+    background:#4b4bff;
+    border-radius:10px;
+}
+
+/* FEES ROW */
+.fees-container {
+    display:flex;
+    flex-wrap:nowrap;
+    justify-content:center;
+    gap:15px;
+    margin-top:40px;
+    overflow-x:auto;
+    padding-bottom:10px;
+}
+
+.fee-card {
+    min-width:160px;
+    background:#4b4bff;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:bold;
+    box-shadow:0 5px 12px rgba(0,0,0,0.2);
+    transition:0.3s;
+    flex-shrink:0;
+}
+
+.fee-card:hover {
+    transform:scale(1.05);
+    background:#3737d6;
+}
+</style>
+<!-- CONTACT -->
+<section id="contact" class="page">
+    <h2>Contact</h2>
+    <p>Abani Kanta (Bitto Sir)</p>
+    <p>📞 7815031723</p>
+
+    <p>
+        📍 Location: 
+        <a href="https://www.google.com/maps/search/?api=1&query=Korapalli+High+School,+Korapalli,+Narayanpur,+Odisha+761002" target="_blank">
+            Po, near Korapalli High School, Korapalli, Narayanpur, Odisha 761002
+        </a>
+    </p>
+</section>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+    <div class="modal-box">
+        <span class="close" onclick="closeModal()">✖</span>
+
+        <h3>Enter Mobile Number</h3>
+
+        <input type="text" id="phone" placeholder="Enter 10 digit number">
+
+        <button class="otp-btn" onclick="sendOTP()">Register</button>
+
+        <p id="otpMsg"></p>
+    </div>
+</div>
+
+<footer>
+    Simply Learning Coaching Centre
+</footer>
+
+<script type="module">
+
+// PAGE SWITCH
+window.showPage = function(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+// MODAL
+window.openModal = function(){
+    document.getElementById('modal').style.display='flex';
+}
+
+window.closeModal = function(){
+    document.getElementById('modal').style.display='none';
+}
+
+// REGISTER (NO FIREBASE FOR NOW)
+window.sendOTP = function(){
+    let phone = document.getElementById('phone').value.trim();
+
+    if(!/^\d+$/.test(phone)){
+        document.getElementById('otpMsg').innerText = "Only numbers allowed";
+        return;
+    }
+
+    if(phone.length !== 10){
+        document.getElementById('otpMsg').innerText = "Number must be exactly 10 digits";
+        return;
+    }
+
+    document.getElementById('otpMsg').innerText = "Registered successfully!";
+}
+
+// THEME
+window.toggleTheme = function(){
+    document.body.classList.toggle("dark");
+}
+
+</script>
+
+</body>
+</html>
